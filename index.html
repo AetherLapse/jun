@@ -189,6 +189,37 @@
   .letter-panel .typewriter { font-size: 0.95rem; line-height: 1.8; color: #2b4a6f; white-space: pre-wrap; }
   .letter-panel .sign { margin-top: 1.1rem; text-align: right; font-family: 'Great Vibes', cursive; font-size: 1.7rem; color: #174a8f; }
 
+  /* ---------- gift picker ---------- */
+  .gift-group { width: 100%; max-width: 380px; }
+  .gift-label { color: var(--sky); font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; margin: 1.1rem 0 0.7rem; }
+  .gift-options { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; }
+  .option {
+    font-family: 'Quicksand', sans-serif; font-weight: 600;
+    font-size: 1rem; color: var(--pale);
+    background: linear-gradient(160deg, rgba(30, 90, 168, 0.4), rgba(13, 43, 85, 0.6));
+    border: 1.5px solid rgba(140, 200, 255, 0.35);
+    border-radius: 999px; padding: 0.75rem 1.4rem; cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .option:active { transform: scale(0.95); }
+  .option.selected {
+    background: linear-gradient(160deg, rgba(255, 217, 138, 0.25), rgba(230, 180, 90, 0.35));
+    border-color: var(--gold); color: var(--gold);
+    box-shadow: 0 0 18px rgba(255, 217, 138, 0.4);
+  }
+  .send-btn {
+    margin-top: 1.6rem; font-family: 'Quicksand', sans-serif; font-weight: 700;
+    font-size: 1rem; letter-spacing: 0.06em;
+    color: #0a1c3d; background: linear-gradient(135deg, var(--gold), #ffc96b);
+    border: none; border-radius: 999px; padding: 0.85rem 2.2rem; cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 217, 138, 0.35);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .send-btn:disabled { opacity: 0.35; cursor: default; box-shadow: none; }
+  .send-btn:not(:disabled):active { transform: scale(0.95); }
+  .send-ok { margin-top: 1.4rem; color: var(--gold); font-size: 1rem; animation: rise 0.6s ease forwards; }
+  .send-err { margin-top: 1.4rem; color: #ff9a9a; font-size: 0.95rem; }
+
   /* ---------- finale ---------- */
   .finale .big { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 9vw, 4.6rem); color: #fff; line-height: 1.25; }
   .finale .big b { background: linear-gradient(135deg, #ffd98a, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -350,8 +381,37 @@
     <div class="tap-hint" id="envHint" style="display:none"><span class="ring"></span> tap to finish</div>
   </section>
 
-  <!-- STEP 6 · FINALE -->
-  <section class="step finale" data-step="5">
+  <!-- STEP 6 · GIFT -->
+  <section class="step" data-step="5">
+    <h2 class="section-title">One tiny question…</h2>
+    <p class="section-sub">what would make you smile on your birthday? 💙</p>
+
+    <div class="gift-group">
+      <div class="gift-label">a little something 💸</div>
+      <div class="gift-options" id="giftMoney">
+        <button class="option" data-choice="₹101">₹101</button>
+        <button class="option" data-choice="₹201">₹201</button>
+        <button class="option" data-choice="₹501">₹501</button>
+      </div>
+      <div class="gift-label">or a thing ✨</div>
+      <div class="gift-options" id="giftThings">
+        <button class="option" data-choice="Watch">⌚ Watch</button>
+        <button class="option" data-choice="Necklace">📿 Necklace</button>
+        <button class="option" data-choice="Hairband">🎀 Hairband</button>
+        <button class="option" data-choice="Earrings">💎 Earrings</button>
+        <button class="option" data-choice="Surprise me">🪄 Surprise me</button>
+      </div>
+    </div>
+
+    <button class="send-btn" id="sendBtn" disabled>Send my wish 💌</button>
+    <div class="send-ok" id="sendOk" style="display:none">✨ sent — it's on its way to someone who cares 🥹</div>
+    <div class="send-err" id="sendErr" style="display:none">hmm, couldn't reach the stars — just tell him directly 😅</div>
+
+    <div class="tap-hint" id="giftHint" style="display:none"><span class="ring"></span> tap to finish</div>
+  </section>
+
+  <!-- STEP 7 · FINALE -->
+  <section class="step finale" data-step="6">
     <div class="big">Happy Birthday,<br><b>Jun</b> 🌙</div>
     <p class="sub">May this year be as bright as you make everyone else's. Here's to the moon — and to the girl who wears her name perfectly.</p>
     <div class="tap-hint" style="position:static; margin-top:2.4rem; opacity:0.8"><span class="ring"></span> the end — for now ✨</div>
@@ -386,7 +446,7 @@
 
   // tap-to-advance (whole stage), with envelope special-casing
   document.getElementById('stage').addEventListener('click', (e) => {
-    if (e.target.closest('#envelope')) return; // envelope handles its own tap
+    if (e.target.closest('#envelope, .option, #sendBtn')) return; // those handle their own taps
     if (current === 4) {
       // envelope step: only advance once opened & letter done
       if (envelope.classList.contains('open') && typingDone) {
@@ -450,7 +510,43 @@ Stay the beautiful soul you are. The sky is luckier with you in it. 🌙✨`;
     })();
   }
 
-  // ---------- star confetti ----------
+  // ---------- gift picker ----------
+  const GIFT_ENDPOINT = 'https://06d61f8ad89e8d.lhr.life';
+  const giftMoney = document.getElementById('giftMoney');
+  const giftThings = document.getElementById('giftThings');
+  const sendBtn = document.getElementById('sendBtn');
+  let pickedChoice = null;
+
+  function pickOption(btn) {
+    [giftMoney, giftThings].forEach((g) => g.querySelectorAll('.option').forEach((o) => o.classList.remove('selected')));
+    btn.classList.add('selected');
+    pickedChoice = btn.dataset.choice;
+    sendBtn.disabled = false;
+  }
+  giftMoney.addEventListener('click', (e) => { const b = e.target.closest('.option'); if (b) pickOption(b); });
+  giftThings.addEventListener('click', (e) => { const b = e.target.closest('.option'); if (b) pickOption(b); });
+
+  sendBtn.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    if (!pickedChoice || sendBtn.disabled) return;
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'sending…';
+    try {
+      const res = await fetch(GIFT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ choice: pickedChoice }),
+      });
+      const ok = res.ok;
+      document.getElementById('sendOk').style.display = 'block';
+      if (!ok) document.getElementById('sendErr').style.display = 'block';
+    } catch (err) {
+      document.getElementById('sendErr').style.display = 'block';
+    }
+    sendBtn.style.display = 'none';
+    document.getElementById('giftHint').style.display = 'flex';
+  });
+
   function burst() {
     const emojis = ['✨', '⭐', '🌙', '💙', '🌟'];
     for (let n = 0; n < 26; n++) {
