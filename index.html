@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday Janmoni 🌙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1c3d;
+    --deep: #0d2b55;
+    --blue: #1e5aa8;
+    --sky: #6db3f2;
+    --light: #b8dcff;
+    --pale: #e8f4ff;
+    --gold: #ffd98a;
+    --glow: rgba(140, 200, 255, 0.55);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--pale);
+    background: linear-gradient(180deg, var(--navy) 0%, var(--deep) 35%, #123a72 70%, #0b2752 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(140, 200, 255, 0.35); }
+
+  /* ---------- twinkling starfield ---------- */
+  .stars, .stars2 {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+  .stars { background-image:
+      radial-gradient(1.4px 1.4px at 20px 30px, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 120px 80px, #dfeeff, transparent),
+      radial-gradient(1.6px 1.6px at 220px 140px, #fff, transparent),
+      radial-gradient(1px 1px at 300px 40px, #cfe6ff, transparent),
+      radial-gradient(1.5px 1.5px at 380px 190px, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 460px 100px, #fff, transparent),
+      radial-gradient(1px 1px at 540px 230px, #dbeaff, transparent),
+      radial-gradient(1.6px 1.6px at 620px 60px, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 700px 170px, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 780px 30px, #eaf4ff, transparent);
+    background-size: 850px 280px; animation: twinkle 4s ease-in-out infinite;
+  }
+  .stars2 { background-image:
+      radial-gradient(1.1px 1.1px at 60px 120px, #fff, transparent),
+      radial-gradient(1.3px 1.3px at 160px 200px, #d8e9ff, transparent),
+      radial-gradient(1px 1px at 260px 90px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 340px 250px, #fff, transparent),
+      radial-gradient(1.1px 1.1px at 440px 60px, #e3efff, transparent),
+      radial-gradient(1.4px 1.4px at 520px 210px, #fff, transparent),
+      radial-gradient(1px 1px at 600px 130px, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 700px 260px, #dff0ff, transparent),
+      radial-gradient(1.4px 1.4px at 800px 90px, #fff, transparent),
+      radial-gradient(1px 1px at 880px 200px, #fff, transparent);
+    background-size: 920px 300px; animation: twinkle 6s ease-in-out infinite reverse;
+    opacity: 0.7;
+  }
+  @keyframes twinkle { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+  /* ---------- floating clouds ---------- */
+  .clouds { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .cloud {
+    position: absolute; width: 340px; height: 90px; border-radius: 50%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(190, 225, 255, 0.16), rgba(190,225,255,0) 70%);
+    filter: blur(6px);
+    animation: drift linear infinite;
+  }
+  .cloud:nth-child(1) { top: 14%; left: -20%; animation-duration: 70s; }
+  .cloud:nth-child(2) { top: 34%; left: -35%; animation-duration: 95s; animation-delay: -30s; }
+  .cloud:nth-child(3) { top: 64%; left: -25%; animation-duration: 80s; animation-delay: -55s; }
+  @keyframes drift { from { transform: translateX(0); } to { transform: translateX(140vw); } }
+
+  /* ---------- layout ---------- */
+  main { position: relative; z-index: 2; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 2rem 1.5rem; position: relative;
+  }
+  .script { font-family: 'Great Vibes', cursive; color: var(--gold); }
+  .happy { font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 400; opacity: 0; animation: rise 1.4s ease forwards; }
+  .name {
+    font-family: 'Playfair Display', serif; font-weight: 600;
+    font-size: clamp(3.4rem, 12vw, 7.5rem);
+    background: linear-gradient(135deg, #ffffff 10%, var(--sky) 40%, var(--light) 70%, #fff 95%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 0 60px var(--glow);
+    letter-spacing: 0.02em; margin: 0.4rem 0 0.2rem;
+    opacity: 0; animation: rise 1.6s ease 0.2s forwards;
+  }
+  .nick {
+    font-family: 'Playfair Display', serif; font-style: italic; color: var(--light);
+    font-size: clamp(1.1rem, 3.5vw, 1.7rem); letter-spacing: 0.12em;
+    opacity: 0; animation: rise 1.6s ease 0.45s forwards;
+  }
+  .nick b { color: var(--gold); font-style: normal; font-weight: 600; }
+  @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ---------- glowing crescent moon ---------- */
+  .moon-wrap { position: relative; width: 150px; height: 150px; margin: 2.2rem auto 0; opacity: 0; animation: rise 1.6s ease 0.7s forwards; }
+  .moon {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 55% 45%, #fff8e8, #ffe9b8 45%, #f5c96b 75%, #d9a844 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 60px 22px rgba(255, 233, 180, 0.45), 0 0 140px 60px rgba(140, 200, 255, 0.25);
+    animation: floaty 6s ease-in-out infinite;
+  }
+  .moon::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.5), transparent 40%);
+  }
+  .crescent {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    animation: floaty 6s ease-in-out infinite;
+  }
+  .crescent svg { width: 110px; height: 110px; filter: drop-shadow(0 0 26px rgba(255, 236, 180, 0.85)); }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    color: var(--sky); font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase;
+    opacity: 0; animation: rise 1s ease 1.6s forwards;
+  }
+  .scroll-hint::after { content: '↓'; display: block; margin-top: 0.4rem; animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+  /* ---------- moon phases ---------- */
+  .phases {
+    padding: 5rem 1.5rem; text-align: center;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 5vw, 2.6rem); color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .section-sub { color: var(--sky); margin-bottom: 3rem; font-size: 1rem; }
+  .phase-row { display: flex; justify-content: center; gap: clamp(0.8rem, 3vw, 2.2rem); flex-wrap: wrap; }
+  .phase {
+    display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+    animation: floaty 5s ease-in-out infinite;
+  }
+  .phase:nth-child(2n) { animation-delay: -2.5s; }
+  .phase svg { width: 64px; height: 64px; filter: drop-shadow(0 0 14px rgba(150, 205, 255, 0.6)); }
+  .phase span { font-size: 0.78rem; letter-spacing: 0.18em; color: var(--light); text-transform: uppercase; }
+
+  /* ---------- amazing cards ---------- */
+  .amazing { padding: 5rem 1.5rem; text-align: center; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; max-width: 960px; margin: 0 auto; }
+  .card {
+    background: linear-gradient(160deg, rgba(30, 90, 168, 0.35), rgba(13, 43, 85, 0.55));
+    border: 1px solid rgba(140, 200, 255, 0.28);
+    border-radius: 20px; padding: 2rem 1.4rem;
+    backdrop-filter: blur(8px);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    cursor: default;
+  }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 18px 50px rgba(90, 160, 240, 0.25); border-color: rgba(255, 217, 138, 0.6); }
+  .card .emoji { font-size: 2.4rem; display: block; margin-bottom: 0.9rem; }
+  .card h3 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.15rem; margin-bottom: 0.6rem; }
+  .card p { color: var(--light); font-size: 0.92rem; line-height: 1.6; }
+
+  /* ---------- envelope ---------- */
+  .envelope-section { padding: 5rem 1.5rem 6rem; text-align: center; }
+  .env-hint { color: var(--sky); margin-bottom: 2.4rem; font-size: 0.95rem; letter-spacing: 0.05em; }
+  .envelope {
+    position: relative; width: min(340px, 86vw); height: 220px; margin: 0 auto; cursor: pointer;
+    perspective: 1000px;
+  }
+  .env-back {
+    position: absolute; inset: 0; border-radius: 14px;
+    background: linear-gradient(160deg, #2a6cb8, #174a8f);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(200, 230, 255, 0.25);
+    transition: transform 0.5s ease;
+  }
+  .env-flap {
+    position: absolute; top: 0; left: 0; right: 0; height: 55%;
+    background: linear-gradient(180deg, #3b82d4, #2563ab);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top; transition: transform 0.6s ease;
+    z-index: 3;
+  }
+  .env-letter {
+    position: absolute; left: 6%; right: 6%; top: 8%; height: 78%;
+    background: linear-gradient(170deg, #fffef7, #fdf6e3);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 1.2rem;
+    transform: translateY(0); transition: transform 0.8s ease 0.25s;
+    z-index: 2; color: #174a8f;
+  }
+  .env-letter .wax { font-size: 2.6rem; }
+  .env-letter .open-txt { font-family: 'Playfair Display', serif; font-size: 1.05rem; }
+  .env-pocket {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
+    background: linear-gradient(180deg, #2f6fb9, #1d55a0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 42%);
+    z-index: 1; border-radius: 0 0 14px 14px;
+  }
+  .envelope.open .env-flap { transform: rotateX(180deg); }
+  .envelope.open .env-letter { transform: translateY(-112%); }
+  .env-label {
+    position: absolute; z-index: 4; bottom: 24px; left: 0; right: 0; text-align: center;
+    font-size: 0.8rem; letter-spacing: 0.25em; color: rgba(230, 245, 255, 0.9); text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  /* ---------- the hidden letter ---------- */
+  .letter-panel {
+    display: none; max-width: 620px; margin: 3rem auto 0; text-align: left;
+    background: linear-gradient(170deg, #fffef7, #fdf6e3);
+    color: #173a63; border-radius: 18px; padding: 2.2rem 2rem;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+  .letter-panel.show { display: block; animation: rise 0.9s ease forwards; }
+  .letter-panel::before {
+    content: '🌙'; position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    font-size: 2.4rem; filter: drop-shadow(0 0 12px rgba(255, 217, 138, 0.8));
+  }
+  .letter-panel h2 { font-family: 'Playfair Display', serif; color: #174a8f; margin-bottom: 1.2rem; font-size: 1.5rem; }
+  .letter-panel .typewriter { font-size: 1.02rem; line-height: 1.85; color: #2b4a6f; min-height: 12rem; white-space: pre-wrap; }
+  .letter-panel .sign { margin-top: 1.4rem; text-align: right; font-family: 'Great Vibes', cursive; font-size: 1.9rem; color: #174a8f; }
+
+  /* ---------- footer ---------- */
+  footer {
+    text-align: center; padding: 2.5rem 1rem 3rem; color: rgba(184, 220, 255, 0.55);
+    font-size: 0.85rem; letter-spacing: 0.08em; position: relative; z-index: 2;
+  }
+  footer .heart { color: var(--gold); }
+
+  @media (max-width: 480px) {
+    .envelope { height: 200px; }
+    .letter-panel { padding: 1.6rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="clouds">
+  <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="happy script">Happy Birthday,</div>
+    <h1 class="name">Janmoni</h1>
+    <div class="nick">— also known as <b>Jun</b>, the Moon herself 🌙 —</div>
+
+    <div class="moon-wrap">
+      <div class="moon"></div>
+      <div class="crescent">
+        <svg viewBox="0 0 100 100" fill="none">
+          <path d="M62 8 A 46 46 0 1 0 62 92 A 38 38 0 1 1 62 8 Z" fill="#fff8e8" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="scroll-hint">scroll for magic</div>
+  </section>
+
+  <!-- MOON PHASES -->
+  <section class="phases">
+    <h2 class="section-title">Just like the moon, you go through phases…</h2>
+    <p class="section-sub">…and you're beautiful in every single one ✨</p>
+    <div class="phase-row">
+      <div class="phase">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#eaf4ff" opacity="0.16"/></svg>
+        <span>New Moon</span>
+      </div>
+      <div class="phase">
+        <svg viewBox="0 0 64 64"><path d="M32 6 a26 26 0 0 1 0 52 a22 22 0 0 0 0 -52z" fill="#dcecff"/></svg>
+        <span>Waxing</span>
+      </div>
+      <div class="phase">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#fff8e8"/></svg>
+        <span>Full Moon</span>
+      </div>
+      <div class="phase">
+        <svg viewBox="0 0 64 64"><path d="M32 6 a26 26 0 0 0 0 52 a22 22 0 0 1 0 -52z" fill="#e3f0ff"/></svg>
+        <span>Waning</span>
+      </div>
+      <div class="phase">
+        <svg viewBox="0 0 64 64"><path d="M32 6 a26 26 0 0 1 0 52 a26 26 0 0 0 0 -52z" fill="#cfe4ff"/></svg>
+        <span>Jun 🌙</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMAZING CARDS -->
+  <section class="amazing">
+    <h2 class="section-title">But seriously — you're amazing</h2>
+    <p class="section-sub">A few of the million reasons, in no particular order 💙</p>
+    <div class="cards">
+      <div class="card"><span class="emoji">✨</span><h3>You light up rooms</h3><p>Like the moon lights up the night — you make everything around you a little softer, a little brighter.</p></div>
+      <div class="card"><span class="emoji">💙</span><h3>Your heart is huge</h3><p>You care in a way that's rare. The people around you are lucky, and they know it.</p></div>
+      <div class="card"><span class="emoji">🎨</span><h3>You're creative & unique</h3><p>There's no one quite like you. Your mind, your laugh, your vibe — completely one of a kind.</p></div>
+      <div class="card"><span class="emoji">🌊</span><h3>You're strong</h3><p>You've been through waves and you still shine. That's not luck — that's you.</p></div>
+      <div class="card"><span class="emoji">🌙</span><h3>You're the moon</h3><p>Jun means moon — and honestly, it fits perfectly. Calm, radiant, always watching over people.</p></div>
+      <div class="card"><span class="emoji">🥳</span><h3>Today is YOUR day</h3><p>Happy birthday, Janmoni. The world got better the day you arrived.</p></div>
+    </div>
+  </section>
+
+  <!-- ENVELOPE -->
+  <section class="envelope-section">
+    <h2 class="section-title">One last thing…</h2>
+    <p class="env-hint">there's a little something sealed inside for you 💌</p>
+
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open the envelope">
+      <div class="env-back"></div>
+      <div class="env-letter">
+        <div class="wax">💌</div>
+        <div class="open-txt">a note for Jun</div>
+      </div>
+      <div class="env-flap"></div>
+      <div class="env-pocket"></div>
+      <div class="env-label">tap to open</div>
+    </div>
+
+    <div class="letter-panel" id="letter">
+      <h2>For the moon herself, 🌙</h2>
+      <div class="typewriter" id="typewriter"></div>
+      <div class="sign">— with love, your friend</div>
+    </div>
+  </section>
+</main>
+
+<footer>made with <span class="heart">💙</span> & moonlight for Jun · happy birthday, Janmoni</footer>
+
+<script>
+  // ---------- envelope ----------
+  const envelope = document.getElementById('envelope');
+  const letter = document.getElementById('letter');
+  let opened = false;
+
+  const secretMessage =
+`Dear Jun,
+
+If you're reading this, you found the envelope — of course you did. You always find the magic in things.
+
+I just want you to know: you are so much more amazing than you give yourself credit for. The way you care, the way you laugh, the way you make ordinary days feel special — that's not nothing. That's everything.
+
+Your name means moon, and I've always thought that was perfect. Because you light up the dark for people without ever asking for anything back. But today, the light is on you.
+
+Happy birthday, Janmoni. May this year bring you everything you quietly wish for — and a few things you didn't even dare to dream.
+
+Stay the beautiful soul you are. The sky is luckier with you in it. 🌙✨`;
+
+  function openEnvelope() {
+    if (opened) return;
+    opened = true;
+    envelope.classList.add('open');
+    // little star-burst confetti on open
+    burst();
+    setTimeout(() => {
+      letter.classList.add('show');
+      typewriter(secretMessage, document.getElementById('typewriter'), 14);
+    }, 750);
+  }
+  envelope.addEventListener('click', openEnvelope);
+  envelope.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEnvelope(); } });
+
+  // ---------- typewriter ----------
+  function typewriter(text, el, speed) {
+    el.textContent = '';
+    let i = 0;
+    (function tick() {
+      if (i <= text.length) {
+        el.textContent = text.slice(0, i);
+        i++;
+        setTimeout(tick, speed);
+      }
+    })();
+  }
+
+  // ---------- star confetti burst ----------
+  function burst() {
+    const emojis = ['✨', '⭐', '🌙', '💙', '🌟'];
+    for (let n = 0; n < 26; n++) {
+      const s = document.createElement('span');
+      s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      s.style.cssText = `position:fixed;z-index:99;font-size:${14 + Math.random() * 22}px;left:50%;top:50%;pointer-events:none;transition:transform ${1.1 + Math.random() * 0.8}s cubic-bezier(0.2,0.6,0.3,1),opacity 1.4s ease;`;
+      document.body.appendChild(s);
+      const dx = (Math.random() - 0.5) * 600;
+      const dy = -60 - Math.random() * 380;
+      requestAnimationFrame(() => {
+        s.style.transform = `translate(${dx}px, ${dy}px) rotate(${Math.random() * 360}deg)`;
+        s.style.opacity = '0';
+      });
+      setTimeout(() => s.remove(), 2200);
+    }
+  }
+
+  // ---------- gentle reveal on scroll ----------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) e.target.classList.add('show');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.card, .phase').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = `opacity 0.7s ease ${i * 0.08}s, transform 0.7s ease ${i * 0.08}s`;
+    el.classList.add('reveal-target');
+    io.observe(el);
+  });
+  const revealStyle = document.createElement('style');
+  revealStyle.textContent = '.reveal-target.show { opacity: 1 !important; transform: translateY(0) !important; }';
+  document.head.appendChild(revealStyle);
+</script>
+</body>
+</html>
