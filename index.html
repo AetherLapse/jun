@@ -129,6 +129,20 @@
   .card h3 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.05rem; margin-bottom: 0.45rem; }
   .card p { color: var(--light); font-size: 0.85rem; line-height: 1.55; }
 
+  /* ---------- her eyes scene ---------- */
+  .eyes-scene { width: min(320px, 82vw); margin-bottom: 1.6rem; }
+  .eyes-scene svg { width: 100%; height: auto; }
+  .waves { animation: waveglide 7s ease-in-out infinite; }
+  .reflection { animation: shimmer 3.2s ease-in-out infinite; transform-origin: 196px 150px; }
+  @keyframes waveglide { 0%,100% { transform: translateX(0); opacity: 0.9; } 50% { transform: translateX(-14px); opacity: 1; } }
+  @keyframes shimmer { 0%,100% { transform: scaleY(1); opacity: 0.75; } 50% { transform: scaleY(1.25); opacity: 1; } }
+  .eyes-line {
+    font-family: 'Playfair Display', serif; font-size: clamp(1.25rem, 4.6vw, 1.9rem);
+    color: #fff; line-height: 1.5; margin-bottom: 1.1rem;
+  }
+  .eyes-line br { display: none; }
+  @media (max-width: 480px) { .eyes-line br { display: block; } }
+
   /* ---------- envelope ---------- */
   .envelope { position: relative; width: min(330px, 84vw); height: 210px; cursor: pointer; perspective: 1000px; }
   .env-back {
@@ -280,8 +294,40 @@
     <div class="tap-hint"><span class="ring"></span> tap to continue</div>
   </section>
 
-  <!-- STEP 4 · ENVELOPE -->
+  <!-- STEP 4 · HER EYES -->
   <section class="step" data-step="3">
+    <div class="eyes-scene">
+      <svg viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- crescent moon -->
+        <path d="M196 28 A 64 64 0 1 0 196 156 A 52 52 0 1 1 196 28 Z" fill="#fff8e8" filter="url(#mglow)"/>
+        <defs>
+          <filter id="mglow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- ocean waves -->
+        <g class="waves" fill="none" stroke="#6db3f2" stroke-width="3" stroke-linecap="round">
+          <path d="M8 150 Q 28 138 48 150 T 88 150 T 128 150 T 168 150 T 208 150 T 248 150 T 288 150 T 312 150"/>
+          <path d="M8 168 Q 28 156 48 168 T 88 168 T 128 168 T 168 168 T 208 168 T 248 168 T 288 168 T 312 168" opacity="0.75"/>
+          <path d="M8 186 Q 28 174 48 186 T 88 186 T 128 186 T 168 186 T 208 186 T 248 186 T 288 186 T 312 186" opacity="0.5"/>
+        </g>
+        <!-- moon's reflection -->
+        <g class="reflection">
+          <ellipse cx="196" cy="146" rx="3" ry="10" fill="#ffd98a"/>
+          <ellipse cx="196" cy="150" rx="6" ry="16" fill="#ffd98a" opacity="0.7"/>
+          <ellipse cx="196" cy="152" rx="9" ry="24" fill="#ffd98a" opacity="0.4"/>
+        </g>
+      </svg>
+    </div>
+    <h2 class="section-title">But have I mentioned…</h2>
+    <p class="eyes-line">her eyes are as deep as the blue ocean —<br>and more beautiful than the moon itself.</p>
+    <p class="section-sub">The way she glances. The little habits. The cute little quirks.<br>They make her more beautiful than anyone — in the sky, or in the sea.</p>
+    <div class="tap-hint"><span class="ring"></span> tap to continue</div>
+  </section>
+
+  <!-- STEP 5 · ENVELOPE -->
+  <section class="step" data-step="4">
     <h2 class="section-title">One last thing…</h2>
     <p class="section-sub" id="envSub">there's a little something sealed inside for you 💌</p>
 
@@ -304,8 +350,8 @@
     <div class="tap-hint" id="envHint" style="display:none"><span class="ring"></span> tap to finish</div>
   </section>
 
-  <!-- STEP 5 · FINALE -->
-  <section class="step finale" data-step="4">
+  <!-- STEP 6 · FINALE -->
+  <section class="step finale" data-step="5">
     <div class="big">Happy Birthday,<br><b>Jun</b> 🌙</div>
     <p class="sub">May this year be as bright as you make everyone else's. Here's to the moon — and to the girl who wears her name perfectly.</p>
     <div class="tap-hint" style="position:static; margin-top:2.4rem; opacity:0.8"><span class="ring"></span> the end — for now ✨</div>
@@ -335,13 +381,13 @@
     steps.forEach((s, i) => s.classList.toggle('active', i === n));
     dots.forEach((d, i) => d.classList.toggle('on', i === n));
     backBtn.classList.toggle('show', n > 0);
-    if (n === 3) { typingDone = false; document.getElementById('envHint').style.display = 'none'; }
+    if (n === 4) { typingDone = false; document.getElementById('envHint').style.display = 'none'; }
   }
 
   // tap-to-advance (whole stage), with envelope special-casing
   document.getElementById('stage').addEventListener('click', (e) => {
     if (e.target.closest('#envelope')) return; // envelope handles its own tap
-    if (current === 3) {
+    if (current === 4) {
       // envelope step: only advance once opened & letter done
       if (envelope.classList.contains('open') && typingDone) {
         goTo(current + 1);
